@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 from pickle import FALSE
 
+from decouple import config
+
 from cv2 import FACE_RECOGNIZER_SF_FR_COSINE
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=#%a6e@3epebb=gi^qi0!45o9nq(p0l$0-%rhcb4(%crqb32t#'
+SECRET_KEY = config('SECRET_KEY')
 
 
 
@@ -39,7 +41,7 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'skandlovu@gmail.com'
 
-EMAIL_HOST_PASSWORD = '1020lethu'
+EMAIL_HOST_PASSWORD =  config('EMAIL_HOST_PASSWORD')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -203,8 +205,8 @@ MEDIA_URL = '/media/'
 
 
 
-AWS_ACCESS_KEY_ID='AKIAY45EECJP3US32H56'
-AWS_SECRET_ACCESS_KEY_ID='aYwStOoh+NWZ/6SdaXGCkVthnRGp1QLj+VOqziwf'
+AWS_ACCESS_KEY_ID=config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY_ID=config('AWS_SECRET_ACCESS_KEY_ID')
 AWS_STORAGE_BUCKET_NAME='xxxworldmedia'
 AWS_S3_SIGNATURE_NAME='s3v4'
 AWS_S3_REGION_NAME='eu-central-1'
