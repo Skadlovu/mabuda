@@ -1,0 +1,148 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+XXXFILES-Profile Update
+{% endblock %}
+{% block content %}
+<style>
+    section {
+        max-width: 70%;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    label {
+        margin-bottom: 8px;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 300px;
+        padding: 12px;
+    }
+
+    button {
+        background-color: rgb(236, 224, 222);
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #2a2424;
+    }
+</style>
+<section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Edit Profile</h2>
+        </div>
+    </div>
+</section><!-- End Breadcrumbs -->
+<section id="about" class="about">
+    <div class="container" data-aos="">
+        <div class="section-header">
+            <h2>User Information</h2>
+        </div>
+        <div class="row g-4 g-lg-5" data-aos="" data-aos-delay="">
+            <div class="col-lg-5"> 
+                <div class="about-img">
+                    <img src="{% static '/img/poster.png' %}" class="img-fluid" alt="">
+                </div>
+            </div>
+        <div class="col-lg-7" style="color: red;">
+            <h3 class="pt-0 pt-lg-5" style="color: red;"> Manage profile</h3>
+
+            <!-- Tabs -->
+            <ul class="nav nav-pills mb-3">
+                <li><a class="nav-link active" data-bs-toggle="pill" href="#tab1">Profile Information</a></li>
+                <li><a class="nav-link" data-bs-toggle="pill" href="#tab2">Videos</a></li>
+                <li><a class="nav-link" data-bs-toggle="pill" href="#tab3">Photos</a></li>
+            </ul><!-- End Tabs -->
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <div class="tab-pane show active" id="tab1">
+                    <div class="d-flex align-items-center mt-4">
+                        <div>
+                            <img src="{{ user.profile.image.url }}">
+                            <h3>{{ user.username }}</h3>
+                            <p>{{ username.email }}</p>
+                            <p>Joined on: <br>{{ user.date_joined|date:"F j, Y H:i" }}</p>
+                        </div>
+                    <div class=" form">                                    
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <legend>profile info</legend>
+                            {{ userform |crispy}}
+                            {{ profileform |crispy }}
+                            <button class="btn btn-outline-info" type="submit">Update</button>                                
+                        </form>
+                    </div>
+                </div>
+                <div class=" row">
+                  <button class=" btn btn-outline-info">  <a href="{% url 'password_reset' %}">Reset Password</a></button>
+                </div>
+                    </div><!-- End Tab 1 Content -->
+                    <div class="tab-pane  show" id="tab2">
+                        <div class="d-flex align-items-center mt-4">
+                                {% for item in videos %}
+                                <h3>Video belonging to {{ item.profiles.username }}</h4>
+                                    <h4><a href="{% url 'videos:video-detail' item.id %}">{{ item.title }}</a></h1>
+                                        <h12>{{ item.upload_date}}</h12>
+                                        <p>{{ item.description}}</p>
+                                        <video controls>
+                                            <source src="{{ item.video.url }}" type="video/mp4">
+                                        </video>
+                                
+                                        {% endfor %}
+                        </div>
+                        
+
+                    </div><!-- End Tab 2 Content -->
+
+                    <div class="tab-pane  show" id="tab3">
+
+
+                        <div class="d-flex align-items-center mt-4">
+                        <div>
+                            {% for item in videos %}
+                            <h3>Video belonging to {{ item.streamer.username }}</h4>
+                                <h4><a href="{% url 'stream:video-detail' item.id %}">{{ item.title }}</a></h1>
+                                    <h12>{{ item.upload_date}}</h12>
+                                    <p>{{ item.description}}</p>
+                                    <video controls>
+                                        <source src="{{ item.video.url }}" type="video/mp4">
+                                    </video>
+                        
+                                    {% endfor %}
+                        </div>
+                        </div>
+
+                    </div><!-- End Tab 3 Content -->
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<!-- End About Section -->
+        
+{% endblock content %}

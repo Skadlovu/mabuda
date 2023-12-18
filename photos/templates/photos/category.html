@@ -1,0 +1,24 @@
+{% extends 'base.html'%}
+{% block content %}
+{% block title %}
+XXXFILES-Categories
+
+{% endblock %}
+
+<section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Categories</h2>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+    <div>
+        {% for cat in category %}
+        <h3> {{ cat.category }}</h4>
+        <h4><a href="{% url 'videos:category-list' cat.id %}">{{ cat.name }}</a></h1>>
+          
+        {% endfor %}
+    </div>
+{% endblock content %}

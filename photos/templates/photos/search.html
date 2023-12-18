@@ -1,0 +1,50 @@
+{% extends 'base.html'%}
+{% block title %}
+XXXFILES-Search
+{% endblock %}
+{% block content %}
+<section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Search Videos</h2>
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <div class="center_journal">
+        <h1>Search </h1>
+    </div>
+    <div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+                <div class="input-group-prepend">
+                <span class="input-group-text"></span>
+                </div>
+                <input type="text" class="form-control" name="title" placeholder="Find videos by title">
+                <button type="submit" class="btn btn-dark">Search</button>
+            </div>
+
+
+        </form>
+    </div>
+    <div>
+        {% for item in content%}
+        <div class="card" style="width: 40rem; margin: 20px; box-shadow: 12em;">
+            <img class="rounded-circle border-dark" src="{{ item.profiles.profile.image.url }}" style="border-color: red;" width="30" height="30">
+            <a class="mr-2" href="{% url 'videos:user-videos' item.profiles.username %}" style="text-align: start;">{{ item.uploader }}</a>
+            <h12 style="text-align: start;">{{ item.upload_date }}</h12>
+            <video class="card-image-top" controls>
+                <source src="{{ item.content.url }}" type="video/mp4">
+            </video>
+            <div class="card-body">
+              <h5 class="card-title"><a href="{% url 'videos:video-detail' item.id  %}">{{ item.title }}</a></h5>
+              <p class="card-text">{{item.description }}</p>
+            </div>
+            <hr>
+          </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
