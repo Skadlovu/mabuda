@@ -1,0 +1,12 @@
+
+<h2>Related Videos for "{{ video.title }}"</h2>
+
+{% for related_video in related_videos %}
+<div class="post-item mt-3">
+    <img src="{{ related_video.thumb.url }}" alt="" class="flex-shrink-0">
+    <div>
+        <h4><a href="{% url 'video_detail' related_video.id %}">{{ related_video.title }}</a></h4>
+        <time datetime="2020-01-01">{{related_video.upload_date}}</time>
+    </div>
+</div><!-- End recent post item-->
+{% endfor %}

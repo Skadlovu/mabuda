@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+XXXWORLD-{{ object.title }}
+{% endblock %}
+
+{% block content %}
+<style>
+      button {
+        background-color: rgb(236, 224, 222);
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #2a2424;
+    }
+</style>
+
+<link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+
+
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+      <h2 class="title"><strong></strong></h2>
+      <ol>
+        <li> <a href="#"> {{video.category}}</a></li>
+        <li> <a href="#">{{video.title}}</a></li>
+      </ol>
+
+    </div>
+  </div>
+</section>
+<!-- End Breadcrumbs -->
+  <!-- ======= Blog Details Section ======= -->
+  <section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+      <div class="row g-5">
+        <div class="col-lg-8">
+          <article class="blog-details">
+            <div class="post-img">
+            <video id='my-video' class="video-js" height="360" width="640" preload="auto" controls>
+              <source src="{{ video.video.url }}" type="video/mp4">
+            </video>
+            </div>
+            <h2 class="title">{{video.title}}</h2>
+            <div class="meta-top">
+              <ul>
+                <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href=" ">{{video.uploader}}</a></li>
+                <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a ><time
+                      datetime="2020-01-01">{{video.upload_date}}</time></a></li>
+                <li class="d-flex align-items-center" > <button><i class="bi bi-arrow-down"></i> <a href="{{video.video.url}}">{{video.size}}</a></li></button>
+                <li class="d-flex align-items-center"><i class="bi bi-eye"></i> <a >{{video.views}} Video views</a></li>
+                <li class="d-flex align-items-center"> <button><i class="bi bi-emoji-heart-eyes"></i> 0 Likes</li>
+              </ul>
+              <div class="">
+
+              </div>
+            </div><!-- End meta top -->
+            <div class="content">
+              <blockquote >
+                <p style="color: red;">
+                  {{video.description}}
+                  </p>
+              </blockquote>
+            </div><!-- End post content -->
+            <div class="meta-bottom">
+              <i class="bi bi-share"> <a href=""> Copy link and share with friends</a></i>
+              <ul class="cats">
+                <li><a href="#"> </a></li>
+              </ul>
+            
+              <i class="bi bi-tags"></i>
+              <ul class="tags">
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+              </ul>
+            </div><!-- End meta bottom -->
+          </article>
+          <div class="comments">
+          
+            <h4 class="comments-count"> </h4>
+          
+            <div id="comments-section" class="comment">
+              <div class="d-flex">
+                <div class="comment-img"><img src="assets/img/blog/comments-1.jpg" alt=""></div>
+                <div>
+                  <h5><a href=""></a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
+                  <time datetime="2020-01-01"></time>
+                  <p>
+                    
+                  </p>
+                </div>
+              </div>
+            </div><!-- End comment #1 -->
+            <div class="reply-form">
+              {% if user.is_authenticated %}
+                <h4>Post comment</h4>
+              {% else%}
+                <h4><a href="{% url 'login' %}">Sign in </a>to comment on the post</h4>
+              {% endif %}  
+              <div >      
+              <form id="comment-form" action="">
+                <div class="row">
+                  <div class="col form-group">
+                    <textarea required id="comment" name="comment" class="form-control" placeholder="Your Comment*"></textarea>
+                  </div>
+                </div>
+                <button type="button" onclick="postComment()" class="btn btn-primary">Post Comment</button>
+              </form>
+              </div>
+            </div>
+            </div><!-- End blog comments -->
+            </div>
+
+            <div class="col-lg-4">
+            
+              <div class="sidebar">
+            
+                <div class="sidebar-item search-form">
+                  <h3 class="sidebar-title"><a href=> Explore the website</a></h3>
+               <a href=" {% url 'videos:search' %}"><button type="submit">Search<i class="bi bi-search"></i></button></a>
+                </div><!-- End sidebar search formn-->
+
+            
+                <div class="sidebar-item categories">
+                  <lass="sidebar-title">
+                  <h3 class="sidebar-title"><a href="{% url 'videos:category' %}"> Explore our categories</a></h3>
+                  <ul class="mt-3">
+                  </ul>
+                    {% for category in categories %}
+                    <li><a href="#"> {{ category.name }} videos</a></li>
+                    {% endfor %}
+                  </ul>
+                </div><!-- End sidebar categories-->
+            
+                <div class="sidebar-item recent-posts">
+                  <h3 class="sidebar-title"><a href="#"> Explore related Videos</a></h3>
+            
+                  <div class="mt-3">
+                  
+                  {% for related_video in related_videos|slice:":5" %}
+                  <div class="post-item mt-3">
+                    <img src="{{ related_video.thumb.url }}" alt="" height="100px" width="100px" class="flex-shrink-0">
+                    <div>
+                      <h4><a href="{% url 'videos:video' related_video.id %}">{{ related_video.title }}</a></h4>
+                      <time style="color: red;" datetime="2020-01-01">{{related_video.upload_date}}</time>
+                    </div>
+                  </div><!-- End recent post item-->
+                  {% endfor %}
+
+                  </div>
+            
+                </div><!-- End sidebar recent posts-->
+            
+                <div class="sidebar-item tags">
+                  <h3 class="sidebar-title">Tags</h3>
+                  <ul class="mt-3">
+                    <li><a href="#">Porn</a></li>
+
+                  </ul>
+                </div><!-- End sidebar tags-->
+            
+              </div><!-- End Blog Sidebar -->
+            
+            </div>
+            </div>
+            
+            </div>
+            </section><!-- End Blog Details Section -->
+
+         
+{% endblock %}
