@@ -1,0 +1,429 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html>
+<head>
+     <meta charset="utf-8">
+     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>{%block title%}{%endblock%}</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'img/fav.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  <style>
+    :root {
+      --background-color: #fff;
+      --text-color: #333;
+    }
+  
+    body {
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+  
+    /* Dark mode styles */
+    .dark-mode {
+      --background-color: #222;
+      --text-color: #fff;
+    }
+  </style>
+  <style>
+    .video-item {
+      position: relative;
+      display: inline-block;
+      margin: 10px;
+      cursor: pointer;
+    }
+  
+    .video-preview {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(30, 28, 28, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+  
+    .video-item:hover .video-preview {
+      opacity: 1;
+    }
+  
+    .video {
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+    }
+  </style>
+
+
+  <!-- Variables CSS Files. Uncomment your preferred color scheme -->
+  <!--<link href="{% static'assets/css/variables.css" rel="stylesheet">-->
+  <!-- <link href="assets/css/variables-blue.css" rel="stylesheet"> -->
+  <!-- <link href="assets/css/variables-green.css" rel="stylesheet"> -->
+  <!-- <link href="assets/css/variables-orange.css" rel="stylesheet"> -->
+  <!-- <link href="assets/css/variables-purple.css" rel="stylesheet"> -->
+  <link href="{% static 'assets/css/variables-red.css' %}" rel="stylesheet">
+  <!-- <link href="assets/css/variables-pink.css" rel="stylesheet"> -->
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top" data-scrollto-offset="0">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+            <a href="/" class="logo d-flex align-items-center scrollto me-auto me-lg-0">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <img src="{% static 'img/nd.png' %}" alt="" width="350"> 
+                <!---<h1>X<span>X</span>X<span>WORLD</span></h1>-->
+            </a>
+
+            
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto" href="/">Videos</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'videos:category' %}">Categories</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'photo-list' %}">Photos</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'stream:create_live_stream' %}">XXXLIVE</a></li>
+                    <li><a href="">Dating</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'videos:video_create' %}">Upload</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'videos:search' %}">Search</a></li>
+                    <li ><a class="nav-link scrollto" href="{% url 'assist' %}">Assist </a></li>
+                    {% if user.is_authenticated %}
+                    <li> <a class="nav-link scrollto" style='color:red;background:black;'href="{% url 'profile' %}">Edit profile</a></li>
+                    <li> <a class="nav-link scrollto" style='color:black ;background:red;'href="{% url 'logout' %}">Sign out </a> </li>
+                     {% else %}
+                    <li><a class="nav-link scrollto" style='color: white;background:black;'  href="{% url 'register'%}">Register</a>
+                    <li><a class="nav-link scrollto" style='color: white;background:red;' href="{% url 'login' %}">Sign in </a>
+                    
+                     {% endif %}
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle d-none"></i>
+            </nav><!-- .navbar -->
+        </div>
+    </header>
+    {%block content%}
+    {%endblock%}
+    <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="footer-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Legal</h4>
+            <ul>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Terms of use</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Copyrights</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Privacy Policy</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Statement</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Disclaimer</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Videos</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Categories</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Photos</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Live Show</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Dating</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Switch mode</h4>
+            <button id="darkModeToggle" class="btn btn-outline-info" style='color: white;background:red;'>Mode</button>
+          </div>
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Please Donate</h4>
+            <p>We are a non profit collective, driven by the passion to create a world where adult content is easly accessible</p>
+            <p>Maintaining the website and running the servers is an extremely costly initiative </p>
+            <p>We are not looking to create a premium version anytime ever!!!</p>
+            <p>We are also planning to limit ad content to the minimal to enable our user to have a great experience on the site
+            </p>
+            <p>We are staunch believers of the old adage <span> "it takes a village to raise a child"</span></p>
+            <p>We are calling out to our community to assist take this work forward, whether by donanting time or money to the
+              project</p>
+            <button id="" class="btn btn-outline-info" style='color: white;background:black;'><a href="{% url 'assist' %}">Ways to assist</a></button>
+          
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-legal text-center">
+      <div class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center">
+
+        <div class="d-flex flex-column align-items-center align-items-lg-start">
+          <div class="copyright">
+            &copy; Copyright <strong><span>XXXWORLD</span></strong>. All Rights Reserved
+          </div>
+        </div>
+        <div class="social-links order-first order-lg-last mb-3 mb-lg-0">
+          <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    
+
+  </footer><!-- End Footer -->
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+  <script>
+    document.querySelectorAll(".nav-link").forEach((link) => {
+      if (link.href === window.location.href) {
+        link.classList.add("active");
+        link.setAttribute("aria-current", "page");
+      }
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Check user's preference from local storage or cookie
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+        // Apply dark mode if the preference is true
+        if (isDarkMode) {
+          document.body.classList.add('dark-mode');
+        }
+
+        // Toggle dark mode when the user clicks the dark mode toggle button
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('click', function () {
+          document.body.classList.toggle('dark-mode');
+          const isDarkMode = document.body.classList.contains('dark-mode');
+
+          // Store user's preference in local storage or cookie
+          localStorage.setItem('darkMode', isDarkMode.toString());
+        });
+      });
+  </script>
+  <script>
+    function onMetadataLoaded(video) {
+      // Set the playback range to the first 15 seconds
+      video.addEventListener('loadedmetadata', function () {
+        video.currentTime = 0;
+        video.play();
+        setTimeout(function () {
+          video.pause();
+        }, 15000);  // Pause after 15 seconds
+      });
+    }
+  </script>
+    <script>
+      function togglePayPalInfo() {
+        var paypalInfo = document.getElementById('paypal-info');
+        var paypalCheckbox = document.getElementById('paypal');
+
+        if (paypalCheckbox.checked) {
+          paypalInfo.style.display = 'block';
+        } else {
+          paypalInfo.style.display = 'none';
+        }
+      }
+
+      function processPayPalPayment() {
+        // Add logic to process PayPal payment
+        alert('Processing PayPal payment...');
+      }
+    </script>
+        <script>
+          function sendEmail() {
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var subject = document.getElementById('subject').value;
+            var message = document.getElementById('message').value;
+
+            // Perform basic validation
+            if (!name || !email || !subject || !message) {
+              alert('Please fill in all fields.');
+              return;
+            }
+
+            // Prepare the data to be sent
+            var data = {
+              name: name,
+              email: email,
+              subject: subject,
+              message: message
+            };
+
+            // Send a POST request to your server endpoint
+            fetch('/send-email', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            })
+              .then(response => response.json())
+              .then(data => {
+                // Update the UI with the status message
+                document.getElementById('status-message').innerText = data.message;
+              })
+              .catch(error => {
+                console.error('Error:', error);
+              });
+          }
+        </script>
+        <script>
+          function postComment() {
+            // Get the comment content
+            var commentContent = document.getElementById('comment').value;
+
+            // Perform basic validation
+            if (!commentContent) {
+              alert('Please enter a comment.');
+              return;
+            }
+
+            // Get the video ID from the URL or other source
+            var videoId = getVideoIdFromUrl();  // Implement this function according to your needs
+
+            // Prepare the data to be sent
+            var data = {
+              video_id: videoId,
+              comment: commentContent
+            };
+
+            // Send a POST request to your server endpoint
+            fetch('/api/comments/', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + getAuthToken()  // Include user authentication token
+              },
+              body: JSON.stringify(data)
+            })
+              .then(response => response.json())
+              .then(data => {
+                // Update the UI with the new comment
+                appendCommentToUI(data);
+              })
+              .catch(error => {
+                console.error('Error:', error);
+              });
+          }
+
+          function appendCommentToUI(commentData) {
+            // Append the new comment to the comments section
+            var commentsSection = document.getElementById('comments-section');
+            var commentElement = document.createElement('div');
+            commentElement.innerText = commentData.comment;
+            commentsSection.appendChild(commentElement);
+
+            // Clear the comment form
+            document.getElementById('comment-form').reset();
+          }
+
+          // Add additional functions as needed, such as getting the user's authentication token
+        </script>
+        <script src="https://unpkg.com/video.js/dist/video.js"></script>
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            var myPlayer = videojs('my-video');
+          });
+        </script>
+        
+        <script>
+          function likeVideo() {
+            // Get the video ID from the button's data attribute
+            const videoId = document.getElementById('like-button').getAttribute('data-video-id');
+
+            // Perform an AJAX request to handle the like/unlike action
+            fetch(`/like-video/${videoId}/`, {
+              method: 'POST',
+              headers: {
+                'X-CSRFToken': getCookie('csrftoken'),  // Include CSRF token
+              },
+            })
+              .then(response => response.json())
+              .then(data => {
+                // Update the like count on the button
+                document.getElementById('like-button').innerText = `Likes: ${data.likes_count}`;
+              })
+              .catch(error => console.error('Error:', error));
+          }
+
+          // Function to get CSRF token from cookies
+          function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+          }
+        </script>
+        <script>
+          // Assume you have a WebSocket library, for example, socket.io
+
+            const socket = io('ws://yourdomain.com/ws/live_stream/1/chat/');  // Replace with your domain and live stream ID
+
+            socket.on('connect', () => {
+              console.log('Connected to WebSocket');
+            });
+
+            socket.on('chat.message', (data) => {
+              console.log('Received chat message:', data.message);
+
+              // Handle the message (e.g., update the chat UI)
+            });
+
+            // Send a message
+            socket.emit('chat.message', { message: 'Hello, world!' });
+
+        </script>
+
+        
+
+
+</body>
+
+</html>
+    
+    <!-- ./Footer -->
+</body>
+</html>
+
+
+
+
+
+

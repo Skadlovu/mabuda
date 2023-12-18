@@ -1,0 +1,181 @@
+{% extends 'base.html'%}
+{% block title %}
+XXXWORLD-Assist
+
+{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --background-color: #fff;
+        --text-color: #333;
+    }
+
+    body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+
+    /* Dark mode styles */
+    .dark-mode {
+        --background-color: #222;
+        --text-color: #fff;
+    }
+</style>
+<style>
+    section {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    label {
+        margin-bottom: 8px;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 300px;
+        padding: 12px;
+    }
+
+    button {
+        background-color: #ff002f;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #b30000;
+    }
+</style>
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Help us grow</h2>
+        </div>
+
+    </div>
+</section><!-- End Breadcrumbs -->
+<section style="color: red;">
+    <div class="container-fluid">
+        <div class="flex-lg-row">
+            <div>
+                <h2>Upload Content</h2>
+                <p>Share your content with our community. Whether it's photos, videos, or any interesting piece of
+                    information,including adding new categories and features.
+                </p>
+                <p> We publish everything, but we love african content even more. We have realised that is the most
+                    underserved category in the porn universe and we are on a mission to change that with your help </p>
+                <p>
+                    kindly observe the uploading convention when uploading videos: Please select the appropriate
+                    category based on the video you are intending to post. This is to ensure we maintain properly
+                    catalogued content in the categories.
+                </p>
+                <p>Your contributions are
+                    valued. Lets grow the content and community one post at a time</p>
+                <!-- Add a form or instructions for content upload -->
+            </div>
+            <a class="align-items-center" href="{% url 'videos:video_create' %}"> <button
+                    style='color: white;background:black;' class="btn btn-outline-info">Upload video </button>
+                <a class="align-items-center" href="{% url 'photo_create' %}"> <button
+                        style='color: white;background:black;' class="btn btn-outline-info">Upload photo </button>
+        </div>
+    </div>
+
+</section>
+
+<section style="color:red;">
+    <di class="container-fluid">
+        <div class="flex-lg-row">
+            <h2>Contribute Code</h2>
+            <p>We welcome contributions from developers. Help us enhance our website by contributing to the codebase on GitHub.
+            </p>
+            <p>Visit our GitHub repository: <a href="https://github.com/your/repository">GitHub Repository</a></p>
+        </div>
+</section>
+<section style="color: red;">
+    <div class="container-fluid">
+        <div class="flex-lg-row">
+            <div>
+                <h2>Donate</h2>
+                <p>Your support keeps our website running. Consider making a donation to help us grow and improve.</p>
+                <div>
+                    <form id="donation-form">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+
+                        <label for="amount">Donation Amount:</label>
+                        <input type="number" id="amount" name="amount" required>
+
+                        <label for="paypal">Use PayPal?</label>
+                        <input type="checkbox" id="paypal" name="paypal" onclick="togglePayPalInfo()">
+
+                        <div id="paypal-info">
+                            <p>Donate using PayPal:</p>
+                            <!-- Add your PayPal information or button here -->
+                            <br>
+                            <!-- Example PayPal button: -->
+                            <button style='color: white;background:black;' class="btn btn-outline-info"
+                                onclick="processPayPalPayment()">Donate with PayPal</button>
+                        </div>
+
+                        <button style='color: white;background:black;' class="btn btn-outline-info" type="submit">Submit
+                            Donation</button>
+                    </form>
+                </div>
+                <div>
+                    <p>Thank you for your support!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section style="color: red;">
+    <div>
+        <div>
+            <h2>Contact Us</h2>
+            <p>If you have questions or need assistance, feel free to reach out to us:</p>
+            <div>
+                <form id="contact-form">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+        
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+        
+                    <label for="subject">Subject:</label>
+                    <input type="text" id="subject" name="subject" required>
+        
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" required></textarea>
+        
+                    <button style='color: white;background:black;' class=" btn btn-outline-info" type="button" onclick="sendEmail()">Send Message</button>
+                </form>
+            </div>
+            <div>
+                <p id="status-message"></p>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+</section>
+{% endblock %}
